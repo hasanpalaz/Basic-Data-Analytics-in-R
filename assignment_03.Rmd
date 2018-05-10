@@ -1,0 +1,117 @@
+---
+title: "Assigment_03"
+author: "Hasan Palaz"
+date: "October 21, 2017"
+output:
+  pdf_document: default
+  word_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(width=150)
+```
+
+
+
+
+## ASSIGNMENT#3
+In this homework, you will do some data analysis using R for the Forest Fire Data described
+http://archive.ics.uci.edu/ml/machine-learning-databases/forest-fires/forestfires.csv
+The dataset is used to find the relationship between the burned area of forest fires
+and meteorological data.
+
+######Q1
+1. Import the data into R.
+a. How many observations are there in the dataset?
+
+b. How many observations are there with a fire (i.e., area>0)
+
+c. How many observations are there with a rain (i.e., rain>0)
+
+d. How many observations are there with both a fire and a rain?
+
+######A1
+1. Import the data into R.
+```{r}
+forestfires_df <- read.csv("C:\\Users\\Enespc\\Desktop\\HASAN\\Introduction to Data Analysis\\forestfires.csv", header = TRUE)
+head(forestfires_df)
+#View(forestfires_df)
+```
+a. How many observations are there in the dataset?
+```{r}
+nrow(forestfires_df)
+```
+b. How many observations are there with a fire (i.e., area>0)
+```{r}
+area_fire <- subset(forestfires_df, area > 0)
+nrow(area_fire)
+```
+c. How many observations are there with a rain (i.e., rain>0)
+```{r}
+area_rain <- subset(forestfires_df, rain > 0)
+nrow(area_rain)
+```
+d. How many observations are there with both a fire and a rain?
+```{r}
+area_fire_and_rain <- subset(forestfires_df, area >0 & rain > 0)
+nrow(area_fire_and_rain)
+```
+
+
+
+######Q2
+Show the columns month, day, area of the all the observations.
+
+######A2
+```{r}
+new_format_all <- subset(forestfires_df, select = c("month", "day", "area"))
+new_format_all
+```
+
+######Q3
+Show the columns month, day, area of the observations with a fire 
+
+######A3
+```{r}
+new_format_fire <- subset(forestfires_df, area > 0, select = c("month", "day", "area"))
+nrow(new_format_fire)
+new_format_fire
+```
+
+######Q4
+How large are the five largest fires (i.e., having largest area) 
+a.What are the corresponding month, temp, RH, wind, rain, area?
+b.Reorder factor levels of month to be from Jan to Dec.
+Add one column to the data indicating whether a fire occurred for each observation
+(True for area >0 and False for area ==0)
+
+######A4
+
+```{r}
+largest_fires <- forestfires_df[order(-forestfires_df$area),]
+largest_fires[1:5,]
+```
+
+a.What are the corresponding month, temp, RH, wind, rain, area?
+
+```{r}
+largest_fires <- subset(largest_fires, select = c("month", "temp", "RH", "wind", "rain", "area"))
+largest_fires[1:5,]
+```
+
+b.Reorder factor levels of month to be from Jan to Dec.
+
+Add one column to the data indicating whether a fire occurred for each observation
+(True for area >0 and False for area ==0)
+
+```{r}
+forestfires_df$fire_occurred <- forestfires_df$area > 0
+#head(forestfires_df)
+month <- tolower(month.abb)
+forestfires_df$month <- factor(forestfires_df$month, month, ordered=TRUE)
+newww <- forestfires_df[order(forestfires_df$month), ]
+newww
+```
+

@@ -1,0 +1,149 @@
+---
+title: "Assigment1_palaz_hasan"
+author: "Hasan Palaz"
+date: "October 6, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+######Q1
+What are the measures of central tendency of data? What is the order of these measures for skewed data?
+
+######A1
+The measures of central tendecy of data are Mean, Median and Mode.
+The order of these measures for skewed data are firstly Median and secondly Mode. It is usually inappropriate to use the Mean in such situations where the data is skewed.
+
+
+######Q2
+How can you measure variation of data?
+
+######A2
+The variation of data can be measured by finding the range, quartiles,  interquartile range, the standard deviation or variance.
+
+A range is one of the most basic measures of variation. It is the difference between the smallest data item in the set and the largest. For example, the range of 73, 79, 84, 87, 88, 91, and 94 is 21, because 94 – 73 is 21.
+
+Quartiles divide your data into quarters: the lowest 25%, the next lowest 25%, the second highest 25% and the highest 25%.
+
+The interquartile range is one of the most popular measures of variation used in statistics. It is a measure of how data is spread around the mean. The basic formula is:
+IQR = Q3 – Q1
+
+
+######Q3
+Create a vector of positive odd integers less
+than 100
+
+######A2
+```{r}
+# Create vector_positive_odd vector contains positive odd integers less than 100
+vector_positive_odd <- c(seq.int(1,100,by=2))
+print("vector_positive_odd")
+vector_positive_odd
+```
+
+
+
+######Q4
+Remove the values greater than 60 and less
+than 80
+
+######A4
+```{r}
+# Remove the values greater than 60 and less than 80 from vector_positive_odd
+vector_positive_odd <- vector_positive_odd[vector_positive_odd < 60 | vector_positive_odd > 80 ]
+print("vector_positive_odd")
+vector_positive_odd
+```
+
+######Q5
+Find the five number summary of the
+remaining set of values
+
+######A5
+```{r}
+# Five number summary of the vector_positive_odd
+print("Five number summary of the vector_positive_odd")
+fivenum (vector_positive_odd)
+```
+
+
+######Q6
+Consider the following vector of values.
+X <-(8, 14, 9, 15, NA, 8,13,2,9, NA)
+Write an R program to return the positions of the missing values
+
+######A6
+```{r}
+# Create Vector X
+X<- c(8,14,9,15,NA,8,13,2,9,NA)
+print('Vector X')
+X
+# the positions of the missing values in X
+print("the positions of the missing values in X")
+which(is.na(X))
+```
+
+
+######Q7
+Write an R program to count the number of non-missing values
+
+######A7
+```{r}
+# Count the number of non-missing values in vector X
+print("positions of non-missing values in Vector X")
+Y<-which(is.na(X)==FALSE)
+Y
+print("the number of non-missing values in vector X")
+length(Y)
+```
+
+
+######Q8
+Write an R program to replace the missing values with the mean of the non-missing values.
+
+######A8
+```{r}
+# Replace the missing values with the mean of the non-missing values in vector X
+print("Vector X")
+X
+meanX<-mean(X, na.rm = TRUE)
+print ("the mean of non-missing values in Vector X ")
+meanX
+X[is.na(X)]<-meanX
+print("the missing values are replaced with the mean of the non-missing values in vector X")
+X
+# Check any "NA"" value in X
+print("Is there any missing value in vector X")
+any(is.na(X))
+```
+
+
+######Q9
+Load mtcars data. Write an R program that will rearrange the rows of the data frame so that they are sorted by the value of Horsepower and Cylinders
+
+######A9
+```{r}
+# Load mtcars data
+data(mtcars)
+# The rows of mtcars are sorted by the value of Horsepower and Cylinders
+mtcars$hp<-sort(mtcars$hp)
+mtcars$cyl<-sort(mtcars$cyl)
+# Present sorted mtcars
+print("Sorted the rows of mtcars by the value of Horsepower and Cylinders")
+head(mtcars, 32)
+```
+
+
+######Q10
+Write an R program to count the number of observations with cylinders greater than 4 and gear greater than 3.
+
+######A10
+```{r}
+# count the number of observations with cylinders greater than 4 and gear greater than 3
+count_cyl_gear<- which(mtcars$cyl>4 & mtcars$gear>3)
+print("The number of observations with cylinders greater than 4 and gear greater than 3")
+length(count_cyl_gear)
+```
+

@@ -1,0 +1,225 @@
+---
+title: "Assigment_02"
+author: "Hasan Palaz"
+date: "October 21, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+######Q1
+Create two matrices from the given set of numbers 
+X1 = {2,3,7,1,6,2,3,5,1} and x2 = {3,2,9,0,7,8,5,8,2}
+
+######A1
+```{r}
+# Define X1 and X2 datasets
+X1 <- c(2,3,7,1,6,2,3,5,1)
+X2 <- c(3,2,9,0,7,8,5,8,2)
+
+# Create 3x3 matrix_01 and matrix_02 from X1 and X2 vectors
+matrix_01 <- matrix(X1, ncol=3)
+matrix_02 <- matrix(X2, ncol=3)
+
+# Lets's look our new matrices
+matrix_01
+matrix_02
+
+```
+
+######Q2
+Find the matrix product.
+
+######A2
+```{r}
+# multiplication of matrix_01 and matrix_02
+matrix_03 <- matrix_01 %*% matrix_02
+matrix_03
+```
+######Q3
+What does correlation coefficient represent? 
+How do you find the correlation between 
+(i) two categorical variables and 
+(ii) categorical variable and continuous variable.
+
+######A3
+What does correlation coefficient represent?
+
+A) In statistics, the correlation coefficient r measures the strength and direction of a linear relationship between two variables on a scatterplot. The value of r is always between +1 and –1.
+
+B) The further an r value is from zero, the stronger the relationship between the two variables.
+
+C) The sign of r indicates the nature of relationship. A positive r indicates a positive relationship, and a negative r indicates a negative relationship.
+
+How do you find the correlation between two categorical variables?
+
+A) Contingency Tables, two way table and stacked column plot are used to find the correlation between two categorical variables. 
+
+How do you find the correlation between categorical variable and continuous variable?
+
+A) Z-test/t-test and ANOVA are used to find the correlation between categorical variable and continuous variable. 
+
+######Q4
+Load the Animals data set from the “MASS” package
+
+######A4
+```{r}
+# If the MASS package is not installed, firstly we do that:
+#install.packages('MASS')
+library(MASS)
+data(Animals)
+head(Animals)
+```
+
+######Q5
+Find the correlation coefficient of brain and body in this data set and comment on the relation between them
+
+######A5
+```{r}
+# Correlation coefficient of brain and body in Animals dataset
+cor(Animals$body, Animals$brain)
+```
+
+Comment on the relation betweenbrain and body:
+
+A) There is no relation (correlation) between brain and body in Animals dataset.
+Because, the correlation of brain and body in Animals dataset is -0.00534, around ZERO.
+
+
+######Q6
+Load USArrests data set. Comment on the distribution of the variables. 
+Is there any relation between UrbanPop and three crimes?
+
+######A6
+Load USArrests data set.
+```{r}
+# Load USArrest data set and check details
+data(USArrests)
+USArrests
+names(USArrests)
+head(USArrests)
+dim(USArrests)
+```
+Comment on the distribution of the variables.
+```{r}
+boxplot(USArrests$Murder, horizontal=TRUE, col= c("red"),main="Box plot of Murder Rate")
+boxplot(USArrests$Assault, horizontal=TRUE, col= c("yellow"),main="Box plot of Assault Rate")
+boxplot(USArrests$Rape, horizontal=TRUE, col= c("blue"),main="Box plot of Rape Rate")
+boxplot(USArrests$UrbanPop, horizontal=TRUE, col= c("brown"),main="Box plot of UrbanPop")
+hist(USArrests$Murder, col="purple",main="Histogram of Murder Rate",xlab="Murder Rate")
+hist(USArrests$Assault, col="green",main="Histogram of Assault Rate",xlab="Assault Rate")
+hist(USArrests$Rape, col="pink",main="Histogram of Rape Rate",xlab="Rape Rate")
+hist(USArrests$UrbanPop, col="gray",main="Histogram of UrbanPop",xlab="UrbanPop")
+summary(USArrests)
+
+```
+
+Comment on the distribution of the variables.
+
+1) Murder rate has a distribution with a very large positive skew. This distribution is not symmetric
+
+2) Assault rate has the two distinct peaks: one at 100-150 and the other at 250-300. Its distribution is not symmetric.
+This distribution with two peaks is called a bimodal distribution.
+
+3) Rape rate has a positive skew. Its distribution is not symmetric. It is also described as "skewed to the right."
+
+4) UrbanPop has an almost symmetric (normal) distribution.
+
+
+Is there any relation between UrbanPop and three crimes?
+Firstly, correlation coefficients of the USArrest are calculated
+```{r}
+# Correlation coefficient of the USArrests dataset
+cor(USArrests)
+```
+Secondly, Scatter Plots of the USArrest should be reviewed.
+```{r}
+plot(USArrests$UrbanPop, USArrests$MUrder)
+plot(USArrests$UrbanPop, USArrests$Assault)
+plot(USArrests$UrbanPop, USArrests$Rape)
+```
+
+According to correlations and cattering plots, it can be said that;
+
+1) There is no relation (r=0.06957262, because r<0.1) between UrbanPop and Murder.
+
+2) There is a weak relation (r=0.25887170, because r<0.3) between UrbanPop and Assault. More observations are needed to find out relation between UrbanPop and Assault.
+
+3) There is a moderate relation (r=0.41134124, because 0.3 < r < 0.5) between UrbanPop and Rape. According to scattering plot Rape against UrbanPop, there are some outliers, but there does seem to be a relationship between Rape and UrbanPop. There is an indication of a correlation and more analysis could be performed.
+
+
+######Q7
+Which states has most and least assault, murder, and rape arrests?
+
+######A7
+
+```{r}
+# Most Assult State
+Assult_max <- which(USArrests$Assault == max (USArrests$Assault))
+print('Most Assult State:')
+rownames(USArrests)[Assult_max]
+# Least Assult State
+Assult_min <- which(USArrests$Assault == min (USArrests$Assault))
+print('Least Assult State:')
+rownames(USArrests)[Assult_min]
+
+# Most Murder State
+Murder_max <- which(USArrests$Murder == max (USArrests$Murder))
+print('Most Murder State:')
+rownames(USArrests)[Murder_max]
+# Least Murder State
+Murder_min <- which(USArrests$Murder == min (USArrests$Murder))
+print('Least Murder State:')
+rownames(USArrests)[Murder_min]
+
+# Most Rape State
+Rape_max <- which(USArrests$Rape == max (USArrests$Rape))
+print('Most Rape State:')
+rownames(USArrests)[Rape_max]
+# Least Rape State
+Rape_min <- which(USArrests$Rape == min (USArrests$Rape))
+print('Least Rape State:')
+rownames(USArrests)[Rape_min]
+```
+
+######Q8
+List the states which have assault arrests more than median of the country.
+
+######A8
+
+```{r}
+# Assult arrest of median of the cuntry
+assault_median = median(USArrests$Assault)
+assault_median
+# List the states which have assault arrests more than median of the country
+subset(USArrests, Assault > assault_median, select= c(UrbanPop, Assault))
+```
+
+
+######Q9
+Which states are in the bottom 25% of murder?
+
+######A9
+
+```{r}
+# Bottom 25% of murder, lowQuartile
+lower_quartille_murder_rate <- quantile(USArrests$Murder)[2]
+lower_quartille_murder_rate 
+# States are in the bottom 25% of murder
+subset(USArrests, Murder < lower_quartille_murder_rate, select= c(UrbanPop, Murder))
+```
+######Q10
+Which states are in the top 25% of the murder.
+
+######A10
+
+```{r}
+# Top 25% of the murder
+upper_quartile_murder_rate <- quantile(USArrests$Murder)[4]
+upper_quartile_murder_rate
+# States are in the top 25% of the murder
+subset(USArrests, Murder > upper_quartile_murder_rate, select= c(UrbanPop, Murder))
+```
+
